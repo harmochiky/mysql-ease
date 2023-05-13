@@ -1,11 +1,18 @@
 const express = require("express");
-const Query = require("./lib/queryBuilder");
+const query = require("./lib/queryBuilder");
+
 const app = express();
-
-const query = new Query();
-
 app.get("/query", (req, res) => {
+  //
+  //
+
   let people = [];
+  let characters = [];
+
+  // (method) QueryBuilder.select(...fields: any[]): QueryBuilder
+  // Fields to select. Default all ("*")
+  // @param fields
+
   query
     .select("character.name", "character_tv_show.tv_show_name")
     .from("character")
@@ -13,15 +20,25 @@ app.get("/query", (req, res) => {
     .where("num_shows", ">", 10)
     .orderBy("num_shows", "DESC")
     .limit(15)
-    .execute((error, results, fields) => {
-      if (error) {
-        // catch any errors whilst quering the database
-        console.error(error);
-        return res.status(400).json({ error });
-      }
-      people = results; // return result as JSON
-      return res.status(200).json({ status: 200, results });
+    .execute((results, fields) => {
+      people = results;
+      return query
+        .select("character.name", "character_tv_show.tv_show_name")
+        .from("character")
+        .limit(15)
+        .execute();
+    })
+    .then((results, fields) => {
+      characters = results;
+      return res.status(200).json({ people, characters });
     });
+  // .catch((err) => {
+  //   console.log(err);
+  //   res.status(400).json({ error });
+  // });
+
+  //
+  //
 });
 
 app.listen(5000, () => {
