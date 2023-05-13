@@ -1,5 +1,5 @@
 const express = require("express");
-const Query = require("./package/queryBuilder");
+const Query = require("./lib/queryBuilder");
 const app = express();
 
 const query = new Query();
