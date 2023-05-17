@@ -1,6 +1,6 @@
 {
   "name": "mysql-ease",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "An easy-to-use MySQL query builder and executor for Node.js",
   "main": "index.js",
   "directories": {
