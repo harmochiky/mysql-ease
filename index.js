@@ -1,7 +1,19 @@
 const express = require("express");
 const query = require("./lib/queryBuilder");
+const { initializeConnection } = require("./lib/connection");
+const { getUsers } = require("./handler");
 
 const app = express();
+
+initializeConnection({
+  host: "localhost",
+  user: "scholaflow",
+  password: "root",
+  database: "scholaflow",
+});
+
+app.get("/", getUsers);
+
 app.get("/query", (req, res) => {
   //
   //
