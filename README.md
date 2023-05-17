@@ -87,129 +87,182 @@ mysql-ease provides a fluent and chainable API for building various types of MyS
 
 #### Select Queries
 
-To construct a SELECT query, you can use the from() and select() methods. Here's an example:
+To construct a SELECT query, you can use the `from()` and `select()` methods. Here's an example:
 
-const mysqleasy = new MysqlEasy();
+```shell
+const db = require("mysql-ease");
 
-mysqleasy.from('users');
-mysqleasy.select('id', 'name', 'email');
-
-const query = mysqleasy.build();
-console.log(query);
+db.select("id, name, email")
+  .from("users")
+  .returnQueryAsString()
+```
 
 The above code will output the following SELECT query:
 
+```shell
 SELECT id, name, email FROM users
+```
 
 You can further customize your SELECT queries by adding conditions, joining tables, specifying the order, and setting limits.
 
-Insert Queries
-To construct an INSERT query, you can use the into() and insert() methods. Here's an example:
+#### Insert Queries
 
-const mysqleasy = new MysqlEasy();
+To construct an INSERT query, you can use the `insert()` and `into()` methods. `insert` takes in an object with the data you want to insert. Here's an example:
 
-mysqleasy.into('users');
-mysqleasy.insert({
-name: 'John Doe',
-email: 'john.doe@example.com',
-});
+```shell
+const db = require("mysql-ease");
 
-const query = mysqleasy.build();
-console.log(query);
+db.insert({
+  name: "John Doe",
+  email: "john.doe@example.com",
+})
+  .into("users")
+  .returnQueryAsString();
+```
 
 The above code will output the following INSERT query
 
+```shell
 INSERT INTO users (name, email) VALUES ('John Doe', 'john.doe@example.com')
+```
 
-const mysqleasy = new MysqlEasy();
+#### Inserting multiple values
 
-mysqleasy.into('users');
-mysqleasy.insert([
-{ name: 'John Doe', email: 'john.doe@example.com' },
-{ name: 'Jane Smith', email: 'jane.smith@example.com' },
-{ name: 'Mike Johnson', email: 'mike.johnson@example.com' },
-]);
+```shell
+const db = require("mysql-ease");
 
-const query = mysqleasy.build();
-console.log(query);
+db.insert([
+{ name: "John Doe", email: "john.doe@example.com" },
+{ name: "Jane Smith", email: "jane.smith@example.com" },
+{ name: "Mike Johnson", email: "mike.johnson@example.com" },
+])
+.into("users")
+.returnQueryAsString();
+```
 
 The above code will output the following INSERT query:
 
+```shell
 INSERT INTO users (name, email)
 VALUES ('John Doe', 'john.doe@example.com'),
 ('Jane Smith', 'jane.smith@example.com'),
 ('Mike Johnson', 'mike.johnson@example.com')
+```
 
 #### Update Queries
 
-To construct an UPDATE query, you can use the table(), set(), and where() methods. Here's an example:
+To construct an UPDATE query, you can use the `update()`, `where()` and `from()` methods. The update `update()` takes in an object. Here's an example:
 
 ```shell
-const mysqleasy = new MysqlEasy();
+const db = require("mysql-ease");
 
-mysqleasy.table('users');
-mysqleasy.set({ status: 'active' });
-mysqleasy.where('id', '=', 1);
-
-const query = mysqleasy.build();
-console.log(query);
+db.update({ name: "John Doe", email: "john.doe@example.com" })
+  .where("user_id", "=", "ID321")
+  .from("users")
+  .returnQueryAsString();
 ```
 
-The above code will output the following UPDATE query:
-UPDATE users SET status = 'active' WHERE id = 1
+#### Delete Queries
 
-Delete Queries
 To construct a DELETE query, you can use the from() and where() methods. Here's an example:
 
-const mysqleasy = new MysqlEasy();
+```shell
+const db = require("mysql-ease");
 
-mysqleasy.from('users');
-mysqleasy.where('id', '=', 1);
-
-const query = mysqleasy.build();
-console.log(query);
+db
+.delete()
+.from("users")
+.where("user_id", "=", "ID321")
+.returnQueryAsString();
+```
 
 The above code will output the following DELETE query:
 
-DELETE FROM users WHERE id = 1
+```shell
+DELETE FROM users WHERE user_id = ID321
+```
 
-These are just a few examples of the query types supported by mysql-ease. You can explore more advanced features and query customization options in the comprehensive API Reference.
+These are just a few examples of the query types supported by mysql-ease. You can explore more advanced features and query customization options.
 
-Executing Queries
-mysql-ease provides a promise-based API for executing queries asynchronously. You can use the query() method to execute a built query. Here's an example:
+### Executing Queries
 
-const mysqleasy = new MysqlEasy();
+mysql-ease provides a promise-based API for executing queries asynchronously. You can use the `query()` method to execute a built query. Here's an example:
 
-// Build the SELECT query
-mysqleasy.from('users');
-mysqleasy.select('id', 'name', 'email');
+```shell
+// Import mysql-ease
+const db = require("mysql-ease");
 
-// Execute the query
-mysqleasy.query()
-.then((results) => {
-console.log('Query Results:', results);
-})
+db.select("id, name, email")
+.from("users")
+.query() // Calling query() returns a promise
+.then((data) => {
+// You can access the returned results if any by accessing "data"
+let users = data;
+console.log({ users });
+});
 .catch((error) => {
+  // any errors will be caught in the catch block and returned like above
 console.error('Query Error:', error);
 });
+```
 
-The query() method returns a Promise that resolves with the query results or rejects with an error if the query execution fails.
+The `query()` method returns a Promise that resolves with the query results or rejects with an error if the query execution fails.
 
-Documentation
-For more detailed examples and comprehensive API documentation, please refer to the Documentation.
+#### Chaining Queries
 
-Contributions and Support
+Since the `query()` returns a promise, maybe you might want to do something with the data soon after getting it or run another query after getting the data. In this case you, can return another query in the `then()` method after your previous query() which will return results of the returned query. Here's an example:
+
+```shell
+const db = require("mysql-ease");
+
+db.select("*")
+  .from("character")
+  .innerJoin(
+    "character_tv_show",
+    "character.id",
+    "character_tv_show.character_id"
+  )
+  .limit(1)
+  .query()
+  .then((data) => {
+    let character = data[0];
+    let character_id = character.character_id;
+    return db
+      .select("character_name")
+      .where("character_id", "=", character_id)
+      .from("tv_show")
+      .query();
+  })
+  .then((data) => {
+    // do something with the data returned
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+```
+
+### Documentation
+
+At the moment, this is the current state of the documentation, however, i will soon link a URL to a `mysql-ease` site containing all the Comprehensive API usage and examples. In the meatime will be adding more example and usage information here but if you have any question you can email me at: harmony@entrebyte.co.za
+
+### Contributions and Support
+
 Contributions, bug reports, and feature requests are welcome! If you encounter any issues or have any questions or suggestions, please open an issue on the GitHub repository. Your contributions help improve the package and make it more robust for the community to use.
 
-Roadmap
+### Roadmap
+
 The following are some planned features and enhancements for mysql-ease:
 
-Support for aggregate functions: Enable users to perform calculations and statistical operations on query results.
-Advanced query building options: Expand the query builder with additional clauses and functionalities to provide more flexibility.
-Enhanced error handling and validation: Improve error reporting and provide better validation of query structures to catch potential issues.
+- Support for aggregate functions: Enable users to perform calculations and statistical operations on query results.
+- Advanced query building options: Expand the query builder with additional clauses and functionalities to provide more flexibility.
+- Enhanced error handling and validation: Improve error reporting and provide better validation of query structures to catch potential issues.
+
 The roadmap reflects the vision for the future development of mysql-ease and is subject to change based on user feedback and emerging needs.
 
-License
+### License
+
 This project is licensed under the MIT License, which allows you to use, modify, and distribute the package for both personal and commercial projects. See the LICENSE file for more details.
 
-Thank you for choosing mysql-ease! We hope this package simplifies your MySQL database interactions and enhances your Node.js applications. If you have any further questions or need assistance, please don't hesitate to reach out. Happy coding!
+### Conclusion
+
+Thank you for choosing mysql-ease! We hope this package simplifies your MySQL database interactions and enhances your Node.js applications. If you have any further questions or need assistance, please don't hesitate to reach out at harmony@entrebyte.co.za, Happy coding!
