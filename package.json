@@ -1,18 +1,48 @@
 {
-  "name": "mysql-easy",
+  "name": "mysql-ease",
   "version": "1.0.0",
-  "description": "MySQL driver for easy clean queries",
+  "description": "An easy-to-use MySQL query builder and executor for Node.js",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./index.js",
-    "start": "node ./index.js"
+  "directories": {
+    "lib": "lib"
   },
-  "author": "harmochiky",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "test": "npm jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harmochiky/mysql-ease.git"
+  },
+  "keywords": [
+    "MySQL",
+    "database",
+    "query",
+    "builder",
+    "SQL",
+    "ORM",
+    "data",
+    "access",
+    "wrapper",
+    "simplified",
+    "CRUD",
+    "SQL queries",
+    "database operations",
+    "data manipulation",
+    "data retrieval",
+    "data management"
+  ],
+  "author": "harmochiky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harmochiky/mysql-ease/issues"
+  },
+  "homepage": "https://github.com/harmochiky/mysql-ease#readme",
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }
