@@ -7,9 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.22"
+    "mysql": "^2.18.1"
   },
   "scripts": {
     "test": "npm jest"
@@ -24,6 +22,8 @@
     "query",
     "builder",
     "SQL",
+    "NodeJs",
+    "Node",
     "ORM",
     "data",
     "access",
