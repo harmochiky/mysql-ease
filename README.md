@@ -1,6 +1,6 @@
-# mysql-easy
+# mysql-ease
 
-mysql-easy is a lightweight and simplified MySQL query builder and data access wrapper for Node.js. It provides an intuitive API to construct and execute MySQL queries with ease.
+mysql-ease is a lightweight and simplified MySQL query builder and data access wrapper for Node.js. It provides an intuitive API to construct and execute MySQL queries with ease.
 
 ## Features
 
@@ -13,15 +13,15 @@ mysql-easy is a lightweight and simplified MySQL query builder and data access w
 
 ## Installation
 
-Install the `mysql-easy` package from npm:
+Install the `mysql-ease` package from npm:
 
 ```shell
-npm install mysql-easy
+npm install mysql-ease
 ```
 
-# mysql-easy
+# mysql-ease
 
-mysql-easy is a lightweight and simplified MySQL query builder and data access wrapper for Node.js. It provides an intuitive API to construct and execute MySQL queries with ease.
+mysql-ease is a lightweight and simplified MySQL query builder and data access wrapper for Node.js. It provides an intuitive API to construct and execute MySQL queries with ease.
 
 ## Features
 
@@ -46,20 +46,20 @@ npm install mysql-ease
 
 ### Why mysql-ease?
 
-Writing complex SQL queries can be time-consuming and error-prone. mysql-easy aims to solve these challenges by providing a simplified and intuitive way to build and execute MySQL queries. Whether you are a beginner or an experienced developer, mysql-easy can significantly enhance your productivity and reduce the amount of code you need to write.
+Writing complex SQL queries can be time-consuming and error-prone. mysql-ease aims to solve these challenges by providing a simplified and intuitive way to build and execute MySQL queries. Whether you are a beginner or an experienced developer, mysql-ease can significantly enhance your productivity and reduce the amount of code you need to write.
 
 ### Getting Started
 
-To get started with mysql-easy, you need to install the package from npm using the following command:
+To get started with mysql-ease, you need to install the package from npm using the following command:
 
 ```shell
-npm install mysql-easy
+npm install mysql-ease
 ```
 
 Once the package is installed, you can include it in your Node.js application by requiring it:
 
 ```shell
-const db = require('mysql-easy');
+const db = require('mysql-ease');
 ```
 
 ### Connecting to the Database
@@ -67,7 +67,7 @@ const db = require('mysql-easy');
 Before using mysql-ease, you need to establish a connection to your MySQL database in which unlike the `mysql` package, this can be done once in your entry file to access the database from anywhere. This can be done by configuring the connection settings and initializing the connection as shown in the example below:
 
 ```shell
-const { initializeConnection } = require('mysql-easy/lib/connection');
+const { initializeConnection } = require('mysql-ease/lib/connection');
 
 const dbConfig = {
   host: 'localhost',
@@ -83,7 +83,7 @@ Make sure to replace the dbConfig object with the actual MySQL connection config
 
 ### Building Queries
 
-mysql-easy provides a fluent and chainable API for building various types of MySQL queries. Let's explore some of the key features and query types supported by mysql-easy.
+mysql-ease provides a fluent and chainable API for building various types of MySQL queries. Let's explore some of the key features and query types supported by mysql-ease.
 
 #### Select Queries
 
@@ -173,10 +173,10 @@ The above code will output the following DELETE query:
 
 DELETE FROM users WHERE id = 1
 
-These are just a few examples of the query types supported by mysql-easy. You can explore more advanced features and query customization options in the comprehensive API Reference.
+These are just a few examples of the query types supported by mysql-ease. You can explore more advanced features and query customization options in the comprehensive API Reference.
 
 Executing Queries
-mysql-easy provides a promise-based API for executing queries asynchronously. You can use the query() method to execute a built query. Here's an example:
+mysql-ease provides a promise-based API for executing queries asynchronously. You can use the query() method to execute a built query. Here's an example:
 
 const mysqleasy = new MysqlEasy();
 
@@ -202,14 +202,14 @@ Contributions and Support
 Contributions, bug reports, and feature requests are welcome! If you encounter any issues or have any questions or suggestions, please open an issue on the GitHub repository. Your contributions help improve the package and make it more robust for the community to use.
 
 Roadmap
-The following are some planned features and enhancements for mysql-easy:
+The following are some planned features and enhancements for mysql-ease:
 
 Support for aggregate functions: Enable users to perform calculations and statistical operations on query results.
 Advanced query building options: Expand the query builder with additional clauses and functionalities to provide more flexibility.
 Enhanced error handling and validation: Improve error reporting and provide better validation of query structures to catch potential issues.
-The roadmap reflects the vision for the future development of mysql-easy and is subject to change based on user feedback and emerging needs.
+The roadmap reflects the vision for the future development of mysql-ease and is subject to change based on user feedback and emerging needs.
 
 License
 This project is licensed under the MIT License, which allows you to use, modify, and distribute the package for both personal and commercial projects. See the LICENSE file for more details.
 
-Thank you for choosing mysql-easy! We hope this package simplifies your MySQL database interactions and enhances your Node.js applications. If you have any further questions or need assistance, please don't hesitate to reach out. Happy coding!
+Thank you for choosing mysql-ease! We hope this package simplifies your MySQL database interactions and enhances your Node.js applications. If you have any further questions or need assistance, please don't hesitate to reach out. Happy coding!
